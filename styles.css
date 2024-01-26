@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #2f2f74;
+    color: whitesmoke;
+}
+
+#app {
+    max-width: 400px;
+    margin: auto;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#inputValue {
+    border: none;
+    background-color: #6767d1;
+    font-size: 28px;
+    color: whitesmoke;
+}
+
+input,
+select,
+button {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#savedConversionBtn {
+    margin-top: 20px;
+}
+
+#result {
+    margin-top: 20px;
+}
+
+#realTimeConversion {
+    margin-top: 20px;
+}

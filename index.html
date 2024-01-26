@@ -4,9 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit converter</title>
+    <link rel="stylesheet" href="./styles.css">
     <script src="./index.js"></script>
 </head>
 <body>
-    
+    <div id="app">
+        <label for="inputValue">Ingrese el valor:</label>
+        <input type="number" id="inputValue">
+        <br>
+        <label for="unitType">Seleccione el tipo de unidad:</label>
+        <select id="unitType">
+            <option value="kg">Kilogramos</option>
+            <option value="gr">Gramos</option>
+            <option value="lt">Litros</option>
+            <option value="mt">Metros</option>
+            <option value="km">Kilómetros</option>
+        </select>
+        <br>
+        <button onclick="convert()">Convertir</button>
+        <div id="realTimeConversion">
+            <label>Conversión en tiempo real:</label>
+            <div id="realTimeResult"></div>
+        </div>
+        <div id="result"></div>
+        <button id="savedConversionBtn" onclick="showSavedConversions()">Ver Conversiones Guardadas</button>
+        <button id="deleteConversionBtn" onclick="deleteSavedConversions()">Borrar Conversiones Realizadas</button>
+    </div>
+
+
+
+
 </body>
 </html>

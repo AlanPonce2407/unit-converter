@@ -1,19 +1,19 @@
 // Objeto que contiene las funciones de conversión
 const unitConverter = {
   convertKgToPounds: function (kilos) {
-    return kilos * 2.20462;
+      return kilos * 2.20462;
   },
   convertLitersToGallons: function (liters) {
-    return liters * 0.264172;
+      return liters * 0.264172;
   },
   convertMetersToFeet: function (meters) {
-    return meters * 3.28084;
+      return meters * 3.28084;
   },
   convertKmToMiles: function (kilometers) {
-    return kilometers * 0.621371;
+      return kilometers * 0.621371;
   },
   convertGrToOz: function (grams) {
-    return grams * 0.035274;
+      return grams * 0.035274;
   },
 };
 
@@ -23,20 +23,20 @@ const unitTypes = ["kg", "gr", "lt", "mt", "km"];
 // Método para buscar una función de conversión por tipo de unidad
 unitConverter.getConversionFunction = function (unitType) {
   switch (unitType.toLowerCase()) {
-    case "kg":
-      return this.convertKgToPounds;
-    case "gr":
-      return this.convertGrToOz;
-    case "lt":
-      return this.convertLitersToGallons;
-    case "mt":
-      return this.convertMetersToFeet;
-    case "km":
-      return this.convertKmToMiles;
-    default:
-      throw new Error(
-        "Tipo de unidad inválido. Por favor ingrese una unidad válida."
-      );
+      case "kg":
+          return this.convertKgToPounds;
+      case "gr":
+          return this.convertGrToOz;
+      case "lt":
+          return this.convertLitersToGallons;
+      case "mt":
+          return this.convertMetersToFeet;
+      case "km":
+          return this.convertKmToMiles;
+      default:
+          throw new Error(
+              "Tipo de unidad inválido. Por favor ingrese una unidad válida."
+          );
   }
 };
 
@@ -49,40 +49,40 @@ unitConverter.convert = function (value, conversionFunction) {
 // Método para obtener la unidad de destino
 function getTargetUnit(unitType) {
   switch (unitType.toLowerCase()) {
-    case "kg":
-      return "libras";
-    case "gr":
-      return "onzas";
-    case "lt":
-      return "galones";
-    case "mt":
-      return "pies";
-    case "km":
-      return "millas";
-    default:
-      throw new Error(
-        "Tipo de unidad inválido. Por favor ingrese una unidad válida."
-      );
+      case "kg":
+          return "libras";
+      case "gr":
+          return "onzas";
+      case "lt":
+          return "galones";
+      case "mt":
+          return "pies";
+      case "km":
+          return "millas";
+      default:
+          throw new Error(
+              "Tipo de unidad inválido. Por favor ingrese una unidad válida."
+          );
   }
 }
 
 // Método de búsqueda en el array de tipos de unidades
 function searchUnitType(query) {
   const foundUnit = unitTypes.find(
-    (unitType) => unitType.toLowerCase() === query.toLowerCase()
+      (unitType) => unitType.toLowerCase() === query.toLowerCase()
   );
   if (foundUnit) {
-    const conversionDescription = getConversionDescription(foundUnit);
-    return { unitType: foundUnit, conversionDescription };
+      const conversionDescription = getConversionDescription(foundUnit);
+      return { unitType: foundUnit, conversionDescription };
   } else {
-    return null;
+      return null;
   }
 }
 
 // Método de filtrado en el array de tipos de unidades
 function filterUnitTypes(query) {
   const filteredTypes = unitTypes.filter((unitType) =>
-    unitType.toLowerCase().includes(query.toLowerCase())
+      unitType.toLowerCase().includes(query.toLowerCase())
   );
   return filteredTypes;
 }
@@ -93,85 +93,108 @@ function getConversionDescription(unitType) {
   return `de ${unitType} a ${targetUnit}`;
 }
 
-// Bucle principal
-while (true) {
-  // Prompt en la que el usuario ingresa un número
-  let inputUnit;
-  do {
-    inputUnit = prompt("Ingrese el valor:");
-    // Revisa si es un número
-    if (isNaN(inputUnit)) {
-      alert("Por favor ingrese un número válido.");
-    }
-  } while (isNaN(inputUnit));
+// Función para convertir llamada por el botón en HTML
+function convert() {
+  const inputElement = document.getElementById("inputValue");
+  const unitTypeElement = document.getElementById("unitType");
+  const resultElement = document.getElementById("result");
 
-  // Prompt que le pregunta al usuario qué tipo de unidad quiere convertir
-  const userInput = prompt(
-    `Ingrese el tipo de unidad o use 'search' o 'filter': ${unitTypes.join(
-      ", "
-    )}`
-  );
+  const inputValue = inputElement.value;
+  const selectedUnitType = unitTypeElement.value;
 
-  // Verifica si el usuario quiere buscar o filtrar
-  if (userInput.toLowerCase() === "search") {
-    const searchQuery = prompt("Ingrese el tipo de unidad a buscar:");
-    const foundUnit = searchUnitType(searchQuery);
-    if (foundUnit) {
-      const result = `${inputUnit} ${
-        foundUnit.unitType
-      } es igual a ${unitConverter.convert(
-        parseFloat(inputUnit),
-        unitConverter.getConversionFunction(foundUnit.unitType)
-      )} ${getTargetUnit(foundUnit.unitType)}.`;
-      console.log(result);
-      alert(
-        `Tipo de unidad encontrado: ${foundUnit.unitType}, ${foundUnit.conversionDescription}`
+  try {
+    const unitType = searchUnitType(selectedUnitType);
+    if (!unitType) {
+      throw new Error(
+        "Tipo de unidad inválido. Por favor ingrese una unidad válida."
       );
-    } else {
-      alert("Tipo de unidad no encontrado.");
     }
-  } else if (userInput.toLowerCase() === "filter") {
-    const filterQuery = prompt(
-      "Ingrese el texto para filtrar tipos de unidad:"
+
+    const conversionFunction = unitConverter.getConversionFunction(
+      unitType.unitType
     );
-    const filteredUnits = filterUnitTypes(filterQuery);
-    if (filteredUnits.length > 0) {
-      alert(`Tipos de unidad filtrados: ${filteredUnits.join(", ")}`);
-    } else {
-      alert("Ningún tipo de unidad encontrado.");
-    }
-  } else {
-    try {
-      // Verifica si el tipo de unidad ingresado está en el array
-      const unitType = searchUnitType(userInput);
-      if (!unitType) {
-        throw new Error(
-          "Tipo de unidad inválido. Por favor ingrese una unidad válida."
-        );
-      }
+    const result = `${inputValue} ${unitType.unitType} es igual a ${unitConverter.convert(
+      parseFloat(inputValue),
+      conversionFunction
+    )} ${getTargetUnit(unitType.unitType)}.`;
 
-      // Obtiene la función de conversión según el tipo de unidad
-      const conversionFunction = unitConverter.getConversionFunction(
-        unitType.unitType
+    // Guardar la conversión en localStorage
+    saveConversionToLocalStorage(result);
+
+    resultElement.textContent = result;
+  } catch (error) {
+    resultElement.textContent = error.message;
+  }
+}
+
+// Evento para conversión en tiempo real mientras el usuario escribe
+const inputElement = document.getElementById("inputValue");
+inputElement.addEventListener("input", updateRealTimeConversion);
+
+function updateRealTimeConversion() {
+  const inputValue = inputElement.value;
+  const selectedUnitType = document.getElementById("unitType").value;
+
+  try {
+    const unitType = searchUnitType(selectedUnitType);
+    if (!unitType) {
+      throw new Error(
+        "Tipo de unidad inválido. Por favor ingrese una unidad válida."
       );
-
-      // Realiza la conversión
-      const result = `${inputUnit} ${
-        unitType.unitType
-      } es igual a ${unitConverter.convert(
-        parseFloat(inputUnit),
-        conversionFunction
-      )} ${getTargetUnit(unitType.unitType)}.`;
-      console.log(result);
-      alert(result);
-    } catch (error) {
-      alert(error.message);
     }
-  }
 
-  // Pregunta si el usuario desea realizar otra conversión
-  const continuePrompt = confirm("¿Desea realizar otra conversión?");
-  if (!continuePrompt) {
-    break; // Sale del bucle si el usuario elige no continuar
+    const conversionFunction = unitConverter.getConversionFunction(
+      unitType.unitType
+    );
+    const realTimeResult = `${inputValue} ${unitType.unitType} es igual a ${unitConverter.convert(
+      parseFloat(inputValue),
+      conversionFunction
+    )} ${getTargetUnit(unitType.unitType)}.`;
+
+    // Crear un elemento input dinámicamente
+    const realTimeResultElement = document.createElement("input");
+    realTimeResultElement.type = "text";
+    realTimeResultElement.id = "realTimeResult";
+    realTimeResultElement.value = realTimeResult;
+    realTimeResultElement.disabled = true;
+
+    // Obtener el contenedor existente y limpiarlo antes de agregar el nuevo input
+    const realTimeConversionContainer = document.getElementById("realTimeConversion");
+    realTimeConversionContainer.innerHTML = "";
+    
+    // Agregar el nuevo input al contenedor
+    realTimeConversionContainer.appendChild(realTimeResultElement);
+  } catch (error) {
+    // Manejar el error si es necesario
+    console.error(error.message);
   }
+}
+
+function saveConversionToLocalStorage(conversion) {
+  // Obtener las conversiones almacenadas actualmente
+  const savedConversions = JSON.parse(localStorage.getItem("savedConversions")) || [];
+
+  // Agregar la nueva conversión al array
+  savedConversions.push(conversion);
+
+  // Guardar el array actualizado en localStorage
+  localStorage.setItem("savedConversions", JSON.stringify(savedConversions));
+}
+
+function showSavedConversions() {
+  const savedConversions = JSON.parse(localStorage.getItem("savedConversions")) || [];
+  const resultElement = document.getElementById("result");
+
+  if (savedConversions.length > 0) {
+    const formattedConversions = savedConversions.map((conversion, index) => `<p>${index + 1}. ${conversion}</p>`).join("");
+    resultElement.innerHTML = formattedConversions;
+  } else {
+    resultElement.textContent = "No hay conversiones guardadas.";
+  }
+}
+
+function deleteSavedConversions() {
+  localStorage.removeItem("savedConversions");
+  const resultElement = document.getElementById("result");
+  resultElement.innerHTML = `<p>Elementos Borrados</p>`
 }
