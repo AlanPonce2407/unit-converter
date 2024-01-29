@@ -151,19 +151,10 @@ function updateRealTimeConversion() {
       conversionFunction
     )} ${getTargetUnit(unitType.unitType)}.`;
 
-    // Crear un elemento input dinámicamente
-    const realTimeResultElement = document.createElement("input");
-    realTimeResultElement.type = "text";
-    realTimeResultElement.id = "realTimeResult";
-    realTimeResultElement.value = realTimeResult;
-    realTimeResultElement.disabled = true;
-
     // Obtener el contenedor existente y limpiarlo antes de agregar el nuevo input
     const realTimeConversionContainer = document.getElementById("realTimeConversion");
     realTimeConversionContainer.innerHTML = "";
-    
-    // Agregar el nuevo input al contenedor
-    realTimeConversionContainer.appendChild(realTimeResultElement);
+
   } catch (error) {
     // Manejar el error si es necesario
     console.error(error.message);
