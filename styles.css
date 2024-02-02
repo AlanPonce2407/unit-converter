@@ -1,37 +1,36 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: #2f2f74;
     color: whitesmoke;
 }
 
 #app {
     max-width: 400px;
     margin: auto;
+    margin-top: 10%;
 }
 
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin: 10px 0;
 }
 
 #inputValue {
     border: none;
-    background-color: #6767d1;
+    background-color: #272626;
     font-size: 28px;
     color: whitesmoke;
+    padding: 5px;
 }
 
 input,
-select,
-button {
+select{
     margin-bottom: 10px;
 }
 
-button {
-    padding: 5px 10px;
-    cursor: pointer;
+.btn {
+    margin: 10px; 
 }
 
 #savedConversionBtn {
