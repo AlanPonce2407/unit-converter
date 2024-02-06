@@ -1,3 +1,13 @@
+// QuerySelectors
+const convertBtn = document.querySelector("#convertBtn");
+const savedConversionBtn = document.querySelector("#savedConversionBtn");
+const deleteConversionBtn = document.querySelector("#deleteConversionBtn");
+
+// EventListeners
+convertBtn.addEventListener("click", convert);
+savedConversionBtn.addEventListener("click", showSavedConversions);
+deleteConversionBtn.addEventListener("click", deleteSavedConversions);
+
 // Objeto que contiene las funciones de conversión
 const unitConverter = {
   convertKgToPounds: function (kilos) {
@@ -127,9 +137,6 @@ function convert() {
   }
 }
 
-// Evento para conversión en tiempo real mientras el usuario escribe
-const inputElement = document.getElementById("inputValue");
-inputElement.addEventListener("input", updateRealTimeConversion);
 
 function updateRealTimeConversion() {
   const inputValue = inputElement.value;
