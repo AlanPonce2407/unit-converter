@@ -137,7 +137,6 @@ function convert() {
   }
 }
 
-
 function updateRealTimeConversion() {
   const inputValue = inputElement.value;
   const selectedUnitType = document.getElementById("unitType").value;
