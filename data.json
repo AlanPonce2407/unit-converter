@@ -1,0 +1,7 @@
+{
+    "kg": "convertKgToPounds",
+    "gr": "convertGrToOz",
+    "lt": "convertLitersToGallons",
+    "mt": "convertMetersToFeet",
+    "km": "convertKmToMiles"
+  }

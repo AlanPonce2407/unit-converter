@@ -103,8 +103,22 @@ function getConversionDescription(unitType) {
   return `de ${unitType} a ${targetUnit}`;
 }
 
+// Función para cargar los datos de conversión desde un archivo JSON
+function loadData() {
+  return fetch('data.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al cargar los datos de conversión.');
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
 // Función para convertir llamada por el botón en HTML
-function convert() {
+async function convert() {
   const inputElement = document.getElementById("inputValue");
   const unitTypeElement = document.getElementById("unitType");
   const resultElement = document.getElementById("result");
@@ -113,6 +127,11 @@ function convert() {
   const selectedUnitType = unitTypeElement.value;
 
   try {
+    // Check if inputValue is empty or not a number
+    if (inputValue === '' || isNaN(inputValue)) {
+      throw new Error("Por favor ingrese un número válido antes de convertir.");
+    }
+
     const unitType = searchUnitType(selectedUnitType);
     if (!unitType) {
       throw new Error(
@@ -120,20 +139,25 @@ function convert() {
       );
     }
 
-    const conversionFunction = unitConverter.getConversionFunction(
-      unitType.unitType
-    );
+    const data = await loadData();
+    const conversionFunctionName = data[selectedUnitType];
+    const conversionFunction = unitConverter[conversionFunctionName];
+
     const result = `${inputValue} ${unitType.unitType} es igual a ${unitConverter.convert(
       parseFloat(inputValue),
       conversionFunction
     )} ${getTargetUnit(unitType.unitType)}.`;
 
-    // Guardar la conversión en localStorage
     saveConversionToLocalStorage(result);
 
     resultElement.textContent = result;
   } catch (error) {
-    resultElement.textContent = error.message;
+    // Display warning message using SweetAlert
+    Swal.fire({
+      icon: 'warning',
+      title: 'Advertencia',
+      text: error.message
+    });
   }
 }
 
